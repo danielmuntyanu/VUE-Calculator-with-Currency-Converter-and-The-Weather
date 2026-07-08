@@ -26,3 +26,5 @@ export const useMemoryStore = defineStore('memory', () => {
 
   return { getMemory, storeMemory, resetMemory }
 })
+
+
