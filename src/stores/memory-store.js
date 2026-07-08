@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { validateMemory } from '@/services/validate-memory.js'
+import { validateMemory } from '@/services/validate-memory' 
 
 export const useMemoryStore = defineStore('memory', () => {
   const currentMemory = ref(null)
