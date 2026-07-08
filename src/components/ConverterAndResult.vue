@@ -4,7 +4,7 @@
 
 <template>
     <section>
-        <h1>Converter And Result</h1>
+        <h1 class="text-center">Converter And Result</h1>
     </section>
     
   <!-- <v-icon class="myclass" :icon="mdiAccount" /> -->

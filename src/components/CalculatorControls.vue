@@ -4,7 +4,7 @@
 
 <template>
     <section>
-        <h1>Calculator Constrols</h1>
+        <h1 class="text-center">Calculator Constrols</h1>
     </section>
   
   <!-- <v-icon class="myclass" :icon="mdiAccount" /> -->

@@ -4,7 +4,7 @@
 
 <template>
     <section>
-        <h1>Weather Widget</h1>
+        <h1 class="text-center">Weather Widget</h1>
     </section>
    
   <!-- <v-icon class="myclass" :icon="mdiAccount" /> -->
