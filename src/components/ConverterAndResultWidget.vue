@@ -2,22 +2,18 @@
 import { mdiArrowRight } from '@mdi/js';
 
 import { useCalculatorStore } from '@/stores/calculator-store';
+import { useConverterStore } from '@/stores/converter-store.js';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import CalcInputField from './CalcInputField.vue';
+import ConvResultField from './ConvResultField.vue';
 
 const caclStore = useCalculatorStore()
 const { inputField } = storeToRefs(caclStore)
 
-const convResultFieldFontSize = computed(() => {
-    const len = String(inputField.value).length
+const { convResult } = storeToRefs(useConverterStore())
 
-    if (len > 17) return '0.6rem'
-    if (len > 14) return '0.8rem'
-    if (len > 11) return '1rem'
-    if (len > 9) return '1.2rem'
-    return '1.5rem'
-})
+
 
 </script>
 
@@ -69,28 +65,14 @@ const convResultFieldFontSize = computed(() => {
                 </v-menu>
             </div>
 
-            
-
             <div class="inputs_field">
                 
-
                 <CalcInputField />
 
                 <v-icon :icon="mdiArrowRight" />
 
-                <div class="conv_inputs_container">
-                    <span 
-                        class="conv_input_on_bg"
-                    >
-                        .
-                    </span>
-                    <span 
-                        class="conv_input_field"
-                        :style="{ fontSize: convResultFieldFontSize }"
-                    >
-                        {{ inputField }}
-                    </span>
-                </div>
+                <ConvResultField />
+
             </div>
 
         </div>

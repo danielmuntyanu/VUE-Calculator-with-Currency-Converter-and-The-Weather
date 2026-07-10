@@ -1,21 +1,20 @@
 <script setup>
-import CalculatorControls from './components/CalculatorControls.vue';
+import CalculatorControlsWidget from './components/CalculatorControlsWidget.vue';
+import ConverterAndResultWidget from './components/ConverterAndResultWidget.vue';
 import WeatherWidget from './components/WeatherWidget.vue';
-import ConverterAndResult from './components/ConverterAndResult.vue';
 
-// import { mdiAccount } from '@mdi/js';
 </script>
 
 <template>
   <main>
     <WeatherWidget />
 
-    <ConverterAndResult />
+    <ConverterAndResultWidget />
 
-    <CalculatorControls />
+    <CalculatorControlsWidget />
+
   </main>
   
-  <!-- <v-icon class="myclass" :icon="mdiAccount" /> -->
 </template>
 
 <style scoped>
