@@ -1,10 +1,11 @@
 <script setup>
 import { useCalculatorStore } from '@/stores/calculator-store';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const caclStore = useCalculatorStore()
-const { inputField, inputOnBg } = storeToRefs(caclStore)
+const { inputField, inputOnBg, activeOperator } = storeToRefs(caclStore)
+const showSnackbar = ref(false)
 
 const calcInputFieldFontSize = computed(() => {
     const len = String(inputField.value).length
@@ -16,20 +17,14 @@ const calcInputFieldFontSize = computed(() => {
     return '1.5rem'
 })
 
-function calcFieldOnChange(event) {
-    inputField.value = event.currentTarget.value
-}
-
-function calcFieldOnFocus(event) {
-    if (inputField.value == 0) {
-        event.currentTarget.value = ''
-    }
-}
-
-function calcFieldOnBlur(event) {
-    if (event.currentTarget.value == '') {
-        inputField.value = 0
-        event.currentTarget.value = 0
+const copyResult = async (event) => {
+    try {
+        await navigator.clipboard.writeText(inputField.value)
+        showSnackbar.value = true
+        console.log('Скопировано в буфер');
+        
+    } catch (error) {
+        console.error('Ошибка при копировании в буфер')
     }
 }
 
@@ -40,22 +35,27 @@ function calcFieldOnBlur(event) {
     <div class="calc_inputs_container">
         <span 
             class="calc_input_on_bg"
-            :style="{ opacity: inputOnBg != null ? 100 : 0 }"
+            :style="{ opacity: inputOnBg != null ? 0.70 : 0 }"
         >
+            {{ activeOperator }}
             {{ inputOnBg != null ? inputOnBg : 'none' }}
         </span>
-        <input 
-            type="text"
+        <span
             class="calc_input_field"
             :style="{ fontSize: calcInputFieldFontSize }"
-            :value="inputField"
-            @change="calcFieldOnChange"
-            @focus="calcFieldOnFocus"
-            @blur="calcFieldOnBlur"
+            @click="copyResult"
         >
-        </input>
+            {{ inputField }}
+        </span>
     </div>
-
+    <v-snackbar 
+        v-model="showSnackbar" 
+        color="primary"
+        variant="tonal"
+        timeout="1500"
+    >
+        Copied to Clipboard
+    </v-snackbar>
 </template>
 
 
@@ -71,11 +71,11 @@ function calcFieldOnBlur(event) {
 }
 
 .calc_input_field {
-    @apply w-32;
+    @apply w-32 cursor-pointer select-none;
 }
 
 .calc_input_on_bg {
-    @apply text-base text-gray-700 truncate;
+    @apply text-base truncate select-none;
 }
 
 </style>
