@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { useCalculatorStore } from '@/stores/calculator-store';
 import { useMemoryStore } from '@/stores/memory-store';
 import { storeToRefs } from 'pinia';
@@ -24,6 +24,18 @@ function memoryRead() {
     if (getMemory.value != null) {
         inputField.value = getMemory.value
     }
+}
+
+const keyMap = {
+    '0': '0', '1': '1', '2': '2', '3': '3', '4': '4',
+    '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
+    '.': '.', ',': '.', 
+    '+': '+', '-': '-',
+    '*': 'x', 'x': 'x',
+    '/': '÷',
+    'Enter': '=', '=': '=',
+    'Escape': 'AC',
+    'Backspace': 'C',
 }
 
 const btnHandler = async (input) => {
@@ -55,7 +67,22 @@ const btnHandler = async (input) => {
     }
 }
 
-// import { mdiAccount } from '@mdi/js';
+const handleKeydown = (event) => {
+    const mapped = keyMap[event.key]
+    if (mapped === undefined) return
+
+    event.preventDefault()
+    btnHandler(mapped)
+}
+
+onMounted(() => {
+    window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('keydown', handleKeydown)
+})
+
 </script>
 
 <template>
@@ -93,7 +120,6 @@ const btnHandler = async (input) => {
     
     </section>
   
-  <!-- <v-icon class="myclass" :icon="mdiAccount" /> -->
 </template>
 
 <style scoped>
