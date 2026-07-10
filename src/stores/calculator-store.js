@@ -61,12 +61,13 @@ export const useCalculatorStore = defineStore('calculator', () => {
   function chooseOperator(oper) {
     if (equalPressed.value) {
       equalPressed.value = false
-      
     }
 
     if (!activeOperator.value) {
     activeOperator.value = oper
     inputOnBg.value = inputField.value
+    console.log(`inputOnBg.value: ${inputOnBg.value}`);
+    
     inputField.value = 0
     } else {
       activeOperator.value = oper
@@ -76,7 +77,7 @@ export const useCalculatorStore = defineStore('calculator', () => {
 
   function calculate() {
 
-    if (!inputOnBg.value) return
+    if (inputOnBg.value == null) return
     
     let result;
     let leftValue;

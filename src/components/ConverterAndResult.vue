@@ -4,36 +4,10 @@ import { mdiArrowRight } from '@mdi/js';
 import { useCalculatorStore } from '@/stores/calculator-store';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
+import CalcInputField from './CalcInputField.vue';
 
 const caclStore = useCalculatorStore()
-const { inputField, inputOnBg } = storeToRefs(caclStore)
-
-const calcInputFieldFontSize = computed(() => {
-    const len = String(inputField.value).length
-
-    if (len > 17) return '0.6rem'
-    if (len > 14) return '0.8rem'
-    if (len > 11) return '1rem'
-    if (len > 9) return '1.2rem'
-    return '1.5rem'
-})
-
-function calcFieldOnChange(event) {
-    inputField.value = event.currentTarget.value
-}
-
-function calcFieldOnFocus(event) {
-    if (inputField.value == 0) {
-        event.currentTarget.value = ''
-    }
-}
-
-function calcFieldOnBlur(event) {
-    if (event.currentTarget.value == '') {
-        inputField.value = 0
-        event.currentTarget.value = 0
-    }
-}
+const { inputField } = storeToRefs(caclStore)
 
 const convResultFieldFontSize = computed(() => {
     const len = String(inputField.value).length
@@ -100,40 +74,22 @@ const convResultFieldFontSize = computed(() => {
             <div class="inputs_field">
                 
 
-                <div class="calc_inputs_container">
-                    <span 
-                        class="calc_input_on_bg"
-                        :class="inputOnBg ? 'block' : 'hidden'"
-                    >
-                        {{ inputOnBg }}
-                    </span>
-                    <input 
-                        type="text"
-                        class="calc_input_field"
-                        :style="{ fontSize: calcInputFieldFontSize }"
-                        :value="inputField"
-                        @change="calcFieldOnChange"
-                        @focus="calcFieldOnFocus"
-                        @blur="calcFieldOnBlur"
-                    >
-                    </input>
-                </div>
+                <CalcInputField />
 
                 <v-icon :icon="mdiArrowRight" />
 
-                <div class="calc_inputs_container">
+                <div class="conv_inputs_container">
                     <span 
-                        class="calc_input_on_bg"
-                        :class="inputOnBg ? 'block' : 'hidden'"
+                        class="conv_input_on_bg"
                     >
-                        {{ inputOnBg }}
+                        .
                     </span>
-                    <input 
-                        type="text"
-                        class="calc_input_field"
-                        :value="inputField"
+                    <span 
+                        class="conv_input_field"
+                        :style="{ fontSize: convResultFieldFontSize }"
                     >
-                    </input>
+                        {{ inputField }}
+                    </span>
                 </div>
             </div>
 
@@ -148,7 +104,7 @@ const convResultFieldFontSize = computed(() => {
 @reference '../assets/main.css';
  
 section {
-    @apply bg-blue-500 w-full h-[20vh] max-h-32;
+    @apply w-full h-[20vh] max-h-32;
 }
 
 .converter_container {
@@ -159,7 +115,7 @@ section {
 }
 
 .converters_field {
-    @apply bg-green-500
+    @apply 
         w-full h-full flex flex-row 
         justify-between items-center
         gap-2
@@ -168,25 +124,25 @@ section {
 
 .inputs_field {
     @apply 
-        w-full h-full bg-red-400
+        w-full h-full 
         flex flex-row justify-between items-center
         gap-2
     ;
 }
 
-.calc_inputs_container {
+.conv_inputs_container {
     @apply 
         flex flex-col justify-start items-start
-        w-full p-2 border rounded-lg
+        w-full px-2 border rounded-lg
     ;
 }
 
-.calc_input_field {
+.conv_input_field {
     @apply w-32;
 }
 
-.calc_input_on_bg {
-    @apply text-base text-gray-700 truncate;
+.conv_input_on_bg {
+    @apply opacity-0 text-base text-gray-700 truncate;
 }
 
 </style>
