@@ -1,14 +1,14 @@
 export default class CurrencyModel {
-    constructor(rate, price) {
-        this.rate = rate
-        this.price = Number(price)
+    constructor(ticker, rate) {
+        this.ticker = ticker
+        this.rate = Number(rate)
+    }
+
+    getTicker() {
+        return this.ticker
     }
 
     getRate() {
         return this.rate
-    }
-
-    getPrice() {
-        return this.price
     }
 }

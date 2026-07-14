@@ -1,11 +1,14 @@
 <script setup>
 import { useCalculatorStore } from '@/stores/calculator-store';
+import { useConverterStore } from '@/stores/converter-store';
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const calcStore = useCalculatorStore()
 const { inputField, inputOnBg, activeOperator } = storeToRefs(calcStore)
 const showSnackbar = ref(false)
+
+const { currentQuantity } = storeToRefs(useConverterStore())
 
 const calcInputFieldFontSize = computed(() => {
     const len = String(inputField.value).length
@@ -27,6 +30,10 @@ const copyResult = async (event) => {
         console.error('Ошибка при копировании в буфер')
     }
 }
+
+watch(inputField, (newValue, oldValue) => {
+    currentQuantity.value = Number(newValue)
+})
 
 </script>
 

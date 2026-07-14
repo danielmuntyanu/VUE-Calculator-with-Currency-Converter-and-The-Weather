@@ -1,7 +1,6 @@
 <script setup>
 import { mdiArrowRight } from '@mdi/js';
 
-import { useCalculatorStore } from '@/stores/calculator-store';
 import { useConverterStore } from '@/stores/converter-store.js';
 import { storeToRefs } from 'pinia';
 import { ref, computed, onMounted } from 'vue';
@@ -10,11 +9,8 @@ import ConvResultField from './ConvResultField.vue';
 
 const isLoading = ref(true)
 
-const calcStore = useCalculatorStore()
-const { inputField } = storeToRefs(calcStore)
-
 const convStore = useConverterStore()
-const { convResult } = storeToRefs(convStore)
+const { tickersList, leftTicker, rightTicker } = storeToRefs(convStore)
 const { initCurs } = convStore
 
 onMounted(async () => {
@@ -29,51 +25,66 @@ onMounted(async () => {
        
         <div class="converter_container">
             
-            <v-progress-circular 
-                v-if="isLoading"
-                indeterminate 
-                :width="7"
-            ></v-progress-circular>
-            
-            <div v-else class="converters_field">
-                <v-menu open-on-hover>
-                    <template v-slot:activator="{ props }">
-                        <v-btn
-                        color="primary"
-                        v-bind="props"
-                        >
-                        $
-                        </v-btn>
-                    </template>
+            <div class="converters_field">
+                <v-progress-circular 
+                    v-if="isLoading"
+                    indeterminate 
+                    :width="7"
+                ></v-progress-circular>
 
-                    <v-list>
-                        <v-list-item
-                        v-for="(item, index) in items"
-                        :key="index"
-                        :value="index"
-                        >
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
-
-                <v-menu open-on-hover>
+                <v-menu v-else open-on-hover>
                     <template v-slot:activator="{ props }">
                         <v-btn
                             color="primary"
                             v-bind="props"
                         >
-                        $
+                            {{leftTicker}}
                         </v-btn>
                     </template>
 
                     <v-list>
                         <v-list-item
-                        v-for="(item, index) in items"
+                        v-for="(item, index) in tickersList"
                         :key="index"
                         :value="index"
+                        @click="leftTicker = item"
                         >
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                        <v-list-item-title>{{ item }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+
+
+                <!-- TITLE -->
+                <span class="app_title">
+                    ConvCulator+
+                </span>
+
+
+                <v-progress-circular 
+                    v-if="isLoading"
+                    indeterminate 
+                    :width="7"
+                ></v-progress-circular>
+
+                <v-menu v-else open-on-hover>
+                    <template v-slot:activator="{ props }">
+                        <v-btn
+                            color="primary"
+                            v-bind="props"
+                        >
+                            {{ rightTicker }}
+                        </v-btn>
+                    </template>
+
+                    <v-list>
+                        <v-list-item
+                        v-for="(item, index) in tickersList"
+                        :key="index"
+                        :value="index"
+                        @click="rightTicker = item"
+                        >
+                        <v-list-item-title>{{ item }}</v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -139,6 +150,11 @@ section {
 
 .conv_input_on_bg {
     @apply opacity-0 text-base text-gray-700 truncate;
+}
+
+.app_title {
+    @apply text-center text-2xl font-bold text-shadow-2sm text-shadow-green-800  
+    ;
 }
 
 </style>
