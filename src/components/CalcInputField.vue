@@ -3,8 +3,8 @@ import { useCalculatorStore } from '@/stores/calculator-store';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 
-const caclStore = useCalculatorStore()
-const { inputField, inputOnBg, activeOperator } = storeToRefs(caclStore)
+const calcStore = useCalculatorStore()
+const { inputField, inputOnBg, activeOperator } = storeToRefs(calcStore)
 const showSnackbar = ref(false)
 
 const calcInputFieldFontSize = computed(() => {

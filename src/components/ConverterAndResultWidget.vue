@@ -4,16 +4,23 @@ import { mdiArrowRight } from '@mdi/js';
 import { useCalculatorStore } from '@/stores/calculator-store';
 import { useConverterStore } from '@/stores/converter-store.js';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import CalcInputField from './CalcInputField.vue';
 import ConvResultField from './ConvResultField.vue';
 
-const caclStore = useCalculatorStore()
-const { inputField } = storeToRefs(caclStore)
+const isLoading = ref(true)
 
-const { convResult } = storeToRefs(useConverterStore())
+const calcStore = useCalculatorStore()
+const { inputField } = storeToRefs(calcStore)
 
+const convStore = useConverterStore()
+const { convResult } = storeToRefs(convStore)
+const { initCurs } = convStore
 
+onMounted(async () => {
+    await initCurs()
+    isLoading.value = false
+})
 
 </script>
 
@@ -21,7 +28,14 @@ const { convResult } = storeToRefs(useConverterStore())
     <section>
        
         <div class="converter_container">
-            <div class="converters_field">
+            
+            <v-progress-circular 
+                v-if="isLoading"
+                indeterminate 
+                :width="7"
+            ></v-progress-circular>
+            
+            <div v-else class="converters_field">
                 <v-menu open-on-hover>
                     <template v-slot:activator="{ props }">
                         <v-btn

@@ -28,7 +28,7 @@ export default class ConverterService {
 
             const curs = []
 
-            for (key, value in rates) {
+            for (const [key, value] of Object.entries(rates)) {
                 if (listedCurs.includes(key)) {
                     curs.push(
                         new CurrencyModel(key, value)
