@@ -11,7 +11,7 @@ const showSnackbar = ref(false)
 const { currentQuantity } = storeToRefs(useConverterStore())
 
 const calcInputFieldFontSize = computed(() => {
-    const len = String(inputField.value).length
+    const len = inputField.value.length
 
     if (len > 17) return '0.6rem'
     if (len > 14) return '0.8rem'
@@ -24,8 +24,6 @@ const copyResult = async (event) => {
     try {
         await navigator.clipboard.writeText(inputField.value)
         showSnackbar.value = true
-        console.log('Скопировано в буфер');
-        
     } catch (error) {
         console.error('Ошибка при копировании в буфер')
     }

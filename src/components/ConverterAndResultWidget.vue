@@ -153,7 +153,7 @@ section {
 }
 
 .app_title {
-    @apply text-center text-2xl font-bold text-shadow-2sm text-shadow-green-800  
+    @apply text-center text-2xl font-bold text-shadow-sm text-shadow-green-800  
     ;
 }
 

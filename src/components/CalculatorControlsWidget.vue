@@ -39,7 +39,7 @@ const keyMap = {
 }
 
 const btnHandler = async (input) => {
-    console.log(input)
+    // console.log(input)
 
     switch (input) {
         case 'M+': storeMemory(inputField.value); break;
@@ -47,16 +47,16 @@ const btnHandler = async (input) => {
         case 'MC': resetMemory(); break;
         case 'C': clearCurrent(); break;
         case 'AC': allClear(); break;
-        case '0': addDigit(0); break;
-        case '1': addDigit(1); break;
-        case '2': addDigit(2); break;
-        case '3': addDigit(3); break;
-        case '4': addDigit(4); break;
-        case '5': addDigit(5); break;
-        case '6': addDigit(6); break;
-        case '7': addDigit(7); break;
-        case '8': addDigit(8); break;
-        case '9': addDigit(9); break;
+        case '0': addDigit('0'); break;
+        case '1': addDigit('1'); break;
+        case '2': addDigit('2'); break;
+        case '3': addDigit('3'); break;
+        case '4': addDigit('4'); break;
+        case '5': addDigit('5'); break;
+        case '6': addDigit('6'); break;
+        case '7': addDigit('7'); break;
+        case '8': addDigit('8'); break;
+        case '9': addDigit('9'); break;
         case '.': addDigit('.'); break;
         case '÷': chooseOperator('÷'); break;
         case 'x': chooseOperator('x'); break;

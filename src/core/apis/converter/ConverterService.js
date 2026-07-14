@@ -13,7 +13,7 @@ export default class ConverterService {
             const data = await this.#repo.get()
 
             const listedCurs = [
-                "USD", "EUR", "JPY"
+                "USD", "EUR", "JPY", "UAH", "TRY"
             ] 
 
             if (!('rates' in data)) {
