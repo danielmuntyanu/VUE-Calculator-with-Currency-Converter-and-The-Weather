@@ -1,5 +1,5 @@
 <script setup>
-
+import { computed } from 'vue';
 import { useConverterStore } from '@/stores/converter-store';
 import { storeToRefs } from 'pinia';
 
