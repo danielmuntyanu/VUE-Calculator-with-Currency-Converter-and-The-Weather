@@ -1,10 +1,10 @@
 export default class WeatherModel {
 
-    constructor(tempActual, tempMin, tempMax, stateSkyId) {
+    constructor(tempActual, tempMin, tempMax, stateSkyImg) {
         this.tempActual = tempActual
         this.tempMin = tempMin
         this.tempMax = tempMax
-        this.stateSkyId = stateSkyId
+        this.stateSkyImg = stateSkyImg
     }
 
     getTempActual() {
@@ -21,8 +21,8 @@ export default class WeatherModel {
     }
 
 
-    getStateSkyId() {
-        return this.stateSkyId
+    getStateSkyImg() {
+        return this.stateSkyImg
     }
 
 

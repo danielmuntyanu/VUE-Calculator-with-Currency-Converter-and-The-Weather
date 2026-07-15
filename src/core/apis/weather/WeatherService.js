@@ -1,3 +1,4 @@
+import { getStateSkyImage } from "@/core/calculate/state-sky-text-to-image";
 import WeatherModel from "@/core/models/WeatherModel";
 
 export default class WeatherService {
@@ -16,7 +17,7 @@ export default class WeatherService {
                 data.temperatura_actual,
                 data.temperaturas.min,
                 data.temperaturas.max,
-                data.stateSky.id
+                getStateSkyImage(data.stateSky.description)
             )
 
             return weather
