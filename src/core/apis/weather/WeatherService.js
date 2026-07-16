@@ -1,5 +1,4 @@
-import { getStateSkyImage } from "@/core/calculate/state-sky-text-to-image";
-import WeatherModel from "@/core/models/WeatherModel";
+import WeatherMapper from "@/core/mappers/WeatherMapper"
 
 export default class WeatherService {
 
@@ -12,16 +11,7 @@ export default class WeatherService {
     async getWeather() {
         try {
             const data = await this.#repo.get()
-
-            const weather = new WeatherModel(
-                data.temperatura_actual,
-                data.temperaturas.min,
-                data.temperaturas.max,
-                getStateSkyImage(data.stateSky.description)
-            )
-
-            return weather
-
+            return WeatherMapper.toModel(data)
         } catch (error) {
             throw new Error(error)
         }

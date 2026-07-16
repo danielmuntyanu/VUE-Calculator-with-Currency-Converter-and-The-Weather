@@ -6,8 +6,10 @@ import CitiesService from '@/core/apis/weather/CitiesService'
 import CitiesRepository from '@/core/apis/weather/CitiesRepository'
 import ProvincesService from '@/core/apis/weather/ProvincesService'
 import ProvincesRepository from '@/core/apis/weather/ProvincesRepository'
+import ProvinceMapper from '@/core/mappers/ProvinceMapper'
+import CityMapper from '@/core/mappers/CityMapper'
 
-defineStore('weather', () => {
+export const useWeatherStore = defineStore('weather', () => {
   const provRepo = new ProvincesRepository()
   const provService = new ProvincesService(provRepo)
   const provList = ref([]) // <- ProvinceModel[]
@@ -21,17 +23,22 @@ defineStore('weather', () => {
   // Actions
 
   function checkStoredProvince() {
-    return JSON.parse(window.localStorage.getItem('currentProvince') || null)
+    const parsedData = JSON.parse(window.localStorage.getItem('currentProvince') || null)
+    if (!parsedData) return null;
+    return ProvinceMapper.storageToModel(parsedData)
   }
+
   function storeProvince() {
     window.localStorage.setItem('currentProvince', JSON.stringify(currentProvince.value))
   }
 
   function checkStoredCity() {
-    return JSON.parse(window.localStorage.getItem('currentCity') || null)
+    const parsedData = JSON.parse(window.localStorage.getItem('currentCity') || null)
+    if (!parsedData) return null;
+    return CityMapper.storageToModel(parsedData)
   }
   function storeCity() {
-    window.localStorage.setItem('currentCity', JSON.stringify(currentProvince.value))
+    window.localStorage.setItem('currentCity', JSON.stringify(currentCity.value))
   }
 
 
@@ -40,14 +47,15 @@ defineStore('weather', () => {
       cityList.value = []
       return
     }
+
     const cityRepo = new CitiesRepository(currentProvince.value.getId())
     const cityService = new CitiesService(cityRepo)
 
-    cityList.value = await cityService.value.getCities()
+    cityList.value = await cityService.getCities()
   }
 
   async function callWeather() {
-    const weatherRepo = new WeatherRepository(currentProvince.getId(), currentCity.value.getId())
+    const weatherRepo = new WeatherRepository(currentProvince.value.getId(), currentCity.value.getId())
     const weatherService = new WeatherService(weatherRepo)
     currentWeather.value = await weatherService.getWeather()
   }
@@ -68,14 +76,15 @@ defineStore('weather', () => {
   }
 
 
-  async function chooseProvinceHandler(province) {
+  async function chooseProvince(province) {
     currentProvince.value = province
     storeProvince()
     await initCities()
+    await callWeather()
   }
 
-  async function chooseCityHandler(city) {
-    currentCity = city
+  async function chooseCity(city) {
+    currentCity.value = city
     storeCity()
     await callWeather()
   }
@@ -89,7 +98,8 @@ defineStore('weather', () => {
     cityList,
     currentProvince,
     currentCity,
-    chooseProvinceHandler,
-    chooseCityHandler
+    currentWeather,
+    chooseProvince,
+    chooseCity
   }
 })

@@ -1,4 +1,4 @@
-import ProvinceModel from "@/core/models/ProvinceModel"
+import ProvinceMapper from "@/core/mappers/ProvinceMapper"
 
 export default class ProvincesService {
 
@@ -10,21 +10,8 @@ export default class ProvincesService {
 
     async getProvinces() {
         try {
-            const data = this.#repo.get()
-
-            const provincesArray = []
-
-            data.provincias.forEach(prov => {
-                provincesArray.push(
-                    new ProvinceModel(
-                        prov.CODPROV,
-                        prov.NOMBRE_PROVINCIA
-                    )
-                )
-            });
-
-            return provincesArray
-
+            const data = await this.#repo.get()
+            return ProvinceMapper.apiToModelList(data.provincias)
         } catch (error) {
             throw new Error(error)
         }

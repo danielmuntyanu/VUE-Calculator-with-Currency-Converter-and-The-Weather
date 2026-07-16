@@ -1,4 +1,4 @@
-import CityModel from "@/core/models/CityModel";
+import CityMapper from "@/core/mappers/CityMapper"
 
 export default class CitiesService {
 
@@ -10,22 +10,8 @@ export default class CitiesService {
 
     async getCities() {
         try {
-            const data = this.#repo.get()
-
-            const citiesArray = []
-
-            data.municipios.forEach(city => {
-                citiesArray.push(
-                    new CityModel(
-                        city.COD_GEO,
-                        city.NOMBRE,
-                        city.CODPROV
-                    )
-                )
-            });
-
-            return citiesArray
-
+            const data = await this.#repo.get()
+            return CityMapper.apiToModelList(data.municipios)
         } catch (error) {
             throw new Error(error)
         }
