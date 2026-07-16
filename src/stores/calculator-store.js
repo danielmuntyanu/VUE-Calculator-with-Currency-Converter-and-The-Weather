@@ -31,9 +31,9 @@ export const useCalculatorStore = defineStore('calculator', () => {
     if (hasInput.value) {
       return 'C'
     } else if (hasCalcInBg.value) {
-      return 'AC'
+      return 'CE'
     } else {
-      return 'AC'
+      return 'CE'
     }
   })
 

@@ -34,7 +34,7 @@ const keyMap = {
     '*': 'x', 'x': 'x',
     '/': '÷',
     'Enter': '=', '=': '=',
-    'Escape': 'AC',
+    'Escape': 'CE',
     'Backspace': 'C',
 }
 
@@ -46,7 +46,7 @@ const btnHandler = async (input) => {
         case 'MR': memoryRead(); break;
         case 'MC': resetMemory(); break;
         case 'C': clearCurrent(); break;
-        case 'AC': allClear(); break;
+        case 'CE': allClear(); break;
         case '0': addDigit('0'); break;
         case '1': addDigit('1'); break;
         case '2': addDigit('2'); break;
