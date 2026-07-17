@@ -1,8 +1,9 @@
 export default class ProvinceModel {
-
-    constructor(provId, provName) {
+    
+    constructor(provId, provName, provCapital) {
         this.provId = provId
         this.provName = provName
+        this.provCapital = provCapital
     }
 
     getId() {
@@ -11,6 +12,10 @@ export default class ProvinceModel {
 
     getName() {
         return this.provName
+    }
+
+    getCapital() {
+        return this.provCapital
     }
 
 }

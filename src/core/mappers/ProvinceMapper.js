@@ -4,7 +4,8 @@ export default class ProvinceMapper {
     static apiToModel(raw) {
         return new ProvinceModel(
             raw.CODPROV,
-            raw.NOMBRE_PROVINCIA
+            raw.NOMBRE_PROVINCIA,
+            raw.CAPITAL_PROVINCIA
         )
     }
 
@@ -15,7 +16,8 @@ export default class ProvinceMapper {
     static storageToModel(raw) {
         return new ProvinceModel(
             raw.provId,
-            raw.provName
+            raw.provName,
+            raw.provCapital
         )
     }
 }

@@ -116,8 +116,12 @@ onMounted(async () => {
                     </v-list>
                 </v-menu>
             </div>
-        
-                
+
+            <img :src="currentWeather?.getStateSkyImg() ?? '@/assets/images/default.png'" />
+
+            <h1>{{ currentWeather?.getTempActual() ?? '*' }}</h1>
+            <h1>{{ currentWeather?.getTempMin() ?? '*' }}</h1>
+            <h1>{{ currentWeather?.getTempMax() ?? '*' }}</h1>
         </div>
         
     </section>

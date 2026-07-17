@@ -7,7 +7,7 @@ export default class WeatherMapper {
             raw.temperatura_actual,
             raw.temperaturas.min,
             raw.temperaturas.max,
-            getStateSkyImage(raw.stateSky.description)
+            '@/assets/images/' + getStateSkyImage(raw.stateSky.description)
         )
     }
 }

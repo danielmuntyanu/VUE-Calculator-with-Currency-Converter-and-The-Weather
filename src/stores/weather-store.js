@@ -63,12 +63,15 @@ export const useWeatherStore = defineStore('weather', () => {
 
   async function initProvinces() {
     provList.value = await provService.getProvinces()
-    currentProvince.value = checkStoredProvince() ?? provList.value[0]
+    currentProvince.value = checkStoredProvince() ?? provList.value[5]
   }
 
   async function initCities() {
     await callCities()
-    currentCity.value = checkStoredCity() ?? cityList.value[0]
+    
+    const curCapitalName = currentProvince.value.getCapital()
+    const curCapital = cityList.value.find(item => item.getName() == curCapitalName)
+    currentCity.value = checkStoredCity() ?? curCapital ?? cityList.value[0]
   }
 
   async function initWeather() {
