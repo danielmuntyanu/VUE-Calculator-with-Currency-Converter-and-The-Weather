@@ -57,6 +57,21 @@ export const useWeatherStore = defineStore('weather', () => {
   async function callWeather() {
     const weatherRepo = new WeatherRepository(currentProvince.value.getId(), currentCity.value.getId())
     const weatherService = new WeatherService(weatherRepo)
+    
+    try {
+      currentWeather.value = await weatherService.getWeather()
+    } catch (error) {
+      await callWeatherCapital()
+    }
+  }
+
+  async function callWeatherCapital() {
+    const curCapitalName = currentProvince.value.getCapital()
+    const curCapital = cityList.value.find(item => item.getName() == curCapitalName)
+    
+    const weatherRepo = new WeatherRepository(currentProvince.value.getId(), curCapital.getId())
+    const weatherService = new WeatherService(weatherRepo)
+    
     currentWeather.value = await weatherService.getWeather()
   }
 

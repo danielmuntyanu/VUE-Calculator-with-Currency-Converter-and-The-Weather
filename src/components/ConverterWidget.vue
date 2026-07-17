@@ -92,11 +92,11 @@ onMounted(async () => {
 
             <div class="inputs_field">
                 
-                <CalcInputField />
+                <CalcInputField class="inputs_container" />
 
                 <v-icon :icon="mdiArrowRight" />
 
-                <ConvResultField />
+                <ConvResultField class="inputs_container" />
 
             </div>
 
@@ -133,27 +133,20 @@ section {
     @apply 
         w-full h-full 
         flex flex-row justify-between items-center
-        gap-2
+        
     ;
-}
-
-.conv_inputs_container {
-    @apply 
-        flex flex-col justify-start items-start
-        w-full px-2 border rounded-lg
-    ;
-}
-
-.conv_input_field {
-    @apply w-32;
-}
-
-.conv_input_on_bg {
-    @apply opacity-0 text-base text-gray-700 truncate;
 }
 
 .app_title {
     @apply text-center text-2xl font-bold text-shadow-sm text-shadow-green-800  
+    ;
+}
+
+.inputs_container {
+    @apply 
+        w-full max-w-[45%] h-full
+        flex flex-col justify-between items-start
+        px-2 border rounded-lg 
     ;
 }
 

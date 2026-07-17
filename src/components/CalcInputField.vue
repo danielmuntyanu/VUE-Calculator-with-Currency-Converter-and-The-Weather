@@ -37,7 +37,7 @@ watch(inputField, (newValue, oldValue) => {
 
 <template>
 
-    <div class="calc_inputs_container">
+    <div>
         <span 
             class="calc_input_on_bg"
             :style="{ opacity: inputOnBg != null ? 0.70 : 0 }"
@@ -52,35 +52,29 @@ watch(inputField, (newValue, oldValue) => {
         >
             {{ inputField }}
         </span>
+
+        <v-snackbar 
+            v-model="showSnackbar" 
+            color="primary"
+            variant="tonal"
+            timeout="1500"
+        >
+            Copied to Clipboard
+        </v-snackbar>
     </div>
-    <v-snackbar 
-        v-model="showSnackbar" 
-        color="primary"
-        variant="tonal"
-        timeout="1500"
-    >
-        Copied to Clipboard
-    </v-snackbar>
+    
 </template>
 
 
 <style scoped>
 @reference '../assets/main.css';
- 
 
-.calc_inputs_container {
-    @apply 
-        flex flex-col justify-start items-start
-        w-full px-2 border rounded-lg
-    ;
+.calc_input_on_bg {
+    @apply text-base truncate select-none;
 }
 
 .calc_input_field {
     @apply w-32 cursor-pointer select-none;
-}
-
-.calc_input_on_bg {
-    @apply text-base truncate select-none;
 }
 
 </style>

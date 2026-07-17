@@ -1,6 +1,6 @@
 <script setup>
-import CalculatorControlsWidget from './components/CalculatorControlsWidget.vue';
-import ConverterAndResultWidget from './components/ConverterAndResultWidget.vue';
+import CalculatorWidget from './components/CalculatorWidget.vue';
+import ConverterWidget from './components/ConverterWidget.vue';
 import WeatherWidget from './components/WeatherWidget.vue';
 
 </script>
@@ -9,9 +9,9 @@ import WeatherWidget from './components/WeatherWidget.vue';
   <main>
     <WeatherWidget />
 
-    <ConverterAndResultWidget />
+    <ConverterWidget />
 
-    <CalculatorControlsWidget />
+    <CalculatorWidget />
 
   </main>
   
