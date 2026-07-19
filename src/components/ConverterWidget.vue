@@ -111,7 +111,7 @@ onMounted(async () => {
 @reference '../assets/main.css';
  
 section {
-    @apply w-full h-[20vh] max-h-32;
+    @apply w-full h-[150px] bg-mauve-600; 
 }
 
 .converter_container {

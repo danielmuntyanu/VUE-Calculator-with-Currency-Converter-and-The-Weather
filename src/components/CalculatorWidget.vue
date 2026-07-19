@@ -12,6 +12,12 @@ const memoryStore = useMemoryStore()
 const { getMemory } = storeToRefs(memoryStore)
 const { storeMemory, resetMemory } = memoryStore
 
+function memoryRead() {
+    if (getMemory.value != null) {
+        inputField.value = getMemory.value
+    }
+}
+
 const buttonNames = [
     'M+', 'MR', 'MC',
     '1', '2', '3', '÷',
@@ -20,27 +26,7 @@ const buttonNames = [
     '.', '0', '=', '+',
 ]
 
-function memoryRead() {
-    if (getMemory.value != null) {
-        inputField.value = getMemory.value
-    }
-}
-
-const keyMap = {
-    '0': '0', '1': '1', '2': '2', '3': '3', '4': '4',
-    '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
-    '.': '.', ',': '.', 
-    '+': '+', '-': '-',
-    '*': 'x', 'x': 'x',
-    '/': '÷',
-    'Enter': '=', '=': '=',
-    'Escape': 'CE',
-    'Backspace': 'C',
-}
-
 const btnHandler = async (input) => {
-    // console.log(input)
-
     switch (input) {
         case 'M+': storeMemory(inputField.value); break;
         case 'MR': memoryRead(); break;
@@ -65,6 +51,19 @@ const btnHandler = async (input) => {
         case '=': calculate(); break;
         default: return
     }
+}
+
+
+const keyMap = {
+    '0': '0', '1': '1', '2': '2', '3': '3', '4': '4',
+    '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
+    '.': '.', ',': '.', 
+    '+': '+', '-': '-',
+    '*': 'x', 'x': 'x',
+    '/': '÷',
+    'Enter': '=', '=': '=',
+    'Escape': 'CE',
+    'Backspace': 'C',
 }
 
 const handleKeydown = (event) => {

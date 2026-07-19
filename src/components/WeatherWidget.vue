@@ -43,10 +43,12 @@ const chooseCityHandler = async (city) => {
 onMounted(async () => {
     await initProvinces()
     isLoadingProvince.value = false
+    await sleep(500)
 
     await initCities()
     isLoadingCity.value =false
-
+    await sleep(500)
+    
     await initWeather()
     isLoadingWeather.value = false
 })
@@ -132,7 +134,13 @@ onMounted(async () => {
 @reference '../assets/main.css';
 
 section {
-    @apply bg-red-500 w-full h-[20vh];
+    @apply bg-red-500 w-full  h-full;
+}
+
+.weather_container {
+    @apply 
+        bg-amber-800 h-full
+    ;
 }
 
 </style>

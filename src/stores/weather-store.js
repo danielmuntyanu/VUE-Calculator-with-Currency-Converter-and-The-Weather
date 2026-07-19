@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import WeatherService from '@/core/apis/weather/WeatherService'
 import WeatherRepository from '@/core/apis/weather/WeatherRepository'
 import CitiesService from '@/core/apis/weather/CitiesService'
@@ -12,13 +12,13 @@ import CityMapper from '@/core/mappers/CityMapper'
 export const useWeatherStore = defineStore('weather', () => {
   const provRepo = new ProvincesRepository()
   const provService = new ProvincesService(provRepo)
-  const provList = ref([]) // <- ProvinceModel[]
-  const currentProvince = ref(null) // <- ProvinceModel || null
+  const provList = ref([]) 
+  const currentProvince = ref(null) 
 
-  const cityList = ref([]) // <- CityModel[]
-  const currentCity = ref(null) // <- CityModel || null
+  const cityList = ref([]) 
+  const currentCity = ref(null)
 
-  const currentWeather = ref(null) // <- WeatherModel
+  const currentWeather = ref(null) 
 
   // Actions
 

@@ -74,7 +74,7 @@ watch(inputField, (newValue, oldValue) => {
 }
 
 .calc_input_field {
-    @apply w-32 cursor-pointer select-none;
+    @apply m-0 w-[90%] cursor-pointer select-none;
 }
 
 </style>
