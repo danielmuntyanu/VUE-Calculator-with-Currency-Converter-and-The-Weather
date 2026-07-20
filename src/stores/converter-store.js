@@ -20,6 +20,10 @@ export const useConverterStore = defineStore('conterter', () => {
     })
 
     const convResult = computed(() => {
+        if (Number.isNaN(currentQuantity.value)) {
+            return '--'
+        }
+
         if (curs.value.length) {
             const leftRate = curs.value.find((item) => item.getTicker() == leftTicker.value).getRate()
             const rightRate = curs.value.find((item) => item.getTicker() == rightTicker.value).getRate()
@@ -29,7 +33,7 @@ export const useConverterStore = defineStore('conterter', () => {
                 leftRate,
                 rightRate
             )
-        }
+        } 
         
         return currentQuantity.value;
     })

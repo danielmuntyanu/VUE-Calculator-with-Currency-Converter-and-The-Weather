@@ -8,8 +8,9 @@ import ThemeSwitcher from './components/ThemeSwitcher.vue';
 
 <template>
   <main>
-    <ThemeSwitcher />
-    <WeatherWidget />
+    <ThemeSwitcher class="theme_switcher" />
+    
+    <WeatherWidget class="weathe_widget" />
 
     <div class="calculator_stack">
       <ConverterWidget />
@@ -30,14 +31,28 @@ main {
     min-h-screen flex 
     flex-col justify-between
     md:flex-row md:justify-center 
-    items-center p-4
+    items-center p-4 gap-4
+  ;
+}
+
+.weathe_widget {
+  @apply 
+    h-[25vh] 
+    max-h-[700px] max-w-[430px]
   ;
 }
 
 .calculator_stack {
   @apply 
-    h-full w-full max-h-[700px] max-w-[430px]
+    h-full w-full 
+    max-h-[700px] max-w-[430px]
     flex flex-col justify-between items-center gap-4
+  ;
+}
+
+.theme_switcher {
+  @apply 
+    absolute top-4 right-4
   ;
 }
 </style>

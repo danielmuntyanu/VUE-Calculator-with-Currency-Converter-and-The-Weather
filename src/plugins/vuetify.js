@@ -9,10 +9,10 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 const lightTheme = {
   dark: false,
   colors: {
-    primary: '#6750A4',
-    secondary: '#625B71',
-    background: '#FFFBFE',
-    surface: '#FFFBFE',
+    primary: '#31708E',
+    secondary: '#687864',
+    background: '#F7F9FB',
+    surface: '#8FC1E3',
     error: '#B3261E',
   }
 }

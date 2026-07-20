@@ -5,7 +5,7 @@ import { useMemoryStore } from '@/stores/memory-store';
 import { storeToRefs } from 'pinia';
 
 const caclStore = useCalculatorStore()
-const { inputField, clearButton, activeOperator } = storeToRefs(caclStore)
+const { inputField, clearButton, activeOperator, equalPressed } = storeToRefs(caclStore)
 const { addDigit, allClear, clearCurrent, chooseOperator, calculate } = caclStore
 
 const memoryStore = useMemoryStore()
@@ -93,7 +93,9 @@ onUnmounted(() => {
                 :value="clearButton"
                 variant="elevated"
                 :id="`btn_${clearButton}`"
+                rounded="xl"
                 @click="btnHandler(clearButton)"
+                color="primary"
                 class="calc_button"
                 
             >
@@ -106,10 +108,15 @@ onUnmounted(() => {
                 :value="item"
                 :id="`btn_${item}`"
                 variant="elevated"
+                rounded="xl"
                 @click="btnHandler(item)"
                 class="calc_button"
                 
-                :class="activeOperator == item ? 'activated_button' : ''"
+                :color="
+                    activeOperator == item || 
+                    (item == '=' && equalPressed) 
+                    ? 'secondary' : 'primary'
+                "
             >
                 {{ item }}
             </v-btn>
@@ -125,7 +132,7 @@ onUnmounted(() => {
 @reference '../assets/main.css';
  
 section {
-    @apply w-full h-[50vh] pb-10;
+    @apply w-full h-[50vh] pb-10 py-4 ;
 }
 
 .buttons_grid {
@@ -137,11 +144,7 @@ section {
 }
 
 .calc_button {
-    @apply bg-green-800 h-10;
-}
-
-.activated_button {
-    @apply bg-green-500;
+    @apply h-10;
 }
 
 </style>

@@ -12,11 +12,10 @@ export const useCalculatorStore = defineStore('calculator', () => {
 
   // Getters
   const hasInput = computed(() => {
-    if (inputField.value != "0") {
-      return true
-    } else {
+    if (inputField.value == "0" || inputField.value == 'ERROR') {
       return false
-    }
+    } 
+    return true
   })
 
   const hasCalcInBg = computed(() => {
@@ -42,6 +41,9 @@ export const useCalculatorStore = defineStore('calculator', () => {
     inputField.value = "0"
     activeOperator.value = null
     inputOnBg.value = null
+    activeOperator.value = null
+    equalPressed.value = false
+    dotEntered.value = false
   }
 
   function clearCurrent() {
@@ -49,6 +51,10 @@ export const useCalculatorStore = defineStore('calculator', () => {
   }
 
   function addDigit(digit) {
+    if (inputField.value == 'ERROR') {
+      return
+    }
+
     if (equalPressed.value) {
       equalPressed.value = false
       allClear()
@@ -74,10 +80,18 @@ export const useCalculatorStore = defineStore('calculator', () => {
       newValue = String(Number(newValue))
     }
     
-    inputField.value = newValue;
+    if (Number.isNaN(Number(newValue)) || !Number.isFinite(Number(newValue))) {
+      inputField.value = 'ERROR'
+    } else {
+      inputField.value = newValue;
+    }
   }
 
   function chooseOperator(oper) {
+    if (inputField.value == 'ERROR') {
+      return
+    }
+    
     if (equalPressed.value) {
       equalPressed.value = false
     }
@@ -94,6 +108,9 @@ export const useCalculatorStore = defineStore('calculator', () => {
   }
 
   function calculate() {
+    if (inputField.value == 'ERROR') {
+      return
+    }
 
     if (inputOnBg.value == null) return
     
@@ -144,6 +161,7 @@ export const useCalculatorStore = defineStore('calculator', () => {
     inputField, 
     inputOnBg,
     activeOperator,
+    equalPressed,
     clearButton, 
     addDigit, 
     allClear, 

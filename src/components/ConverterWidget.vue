@@ -1,5 +1,5 @@
 <script setup>
-import { mdiArrowRight } from '@mdi/js';
+import { mdiArrowRight, mdiMenuDown } from '@mdi/js';
 
 import { useConverterStore } from '@/stores/converter-store.js';
 import { storeToRefs } from 'pinia';
@@ -12,6 +12,14 @@ const isLoading = ref(true)
 const convStore = useConverterStore()
 const { tickersList, leftTicker, rightTicker } = storeToRefs(convStore)
 const { initCurs } = convStore
+
+const curSymbols = {
+    "USD": "$",
+    "EUR": "€",
+    "JPY": "¥",
+    "UAH": "₴",
+    "TRY": "₺",
+}
 
 onMounted(async () => {
     await initCurs()
@@ -36,9 +44,11 @@ onMounted(async () => {
                     <template v-slot:activator="{ props }">
                         <v-btn
                             color="primary"
+                            rounded="xl"
                             v-bind="props"
                         >
                             {{leftTicker}}
+                            <v-icon :icon="mdiMenuDown" />
                         </v-btn>
                     </template>
 
@@ -71,9 +81,11 @@ onMounted(async () => {
                     <template v-slot:activator="{ props }">
                         <v-btn
                             color="primary"
+                            rounded="xl"
                             v-bind="props"
                         >
                             {{ rightTicker }}
+                            <v-icon :icon="mdiMenuDown" />
                         </v-btn>
                     </template>
 
@@ -92,11 +104,31 @@ onMounted(async () => {
 
             <div class="inputs_field">
                 
-                <CalcInputField class="inputs_container" />
+                <v-sheet
+                    border
+                    rounded="xl"
+                    color="surface"
+                    class="inputs_sheet"
+                >
+                    <CalcInputField 
+                        class="inputs_container" 
+                        :currency="curSymbols[leftTicker]"
+                    />
+                </v-sheet>
 
                 <v-icon :icon="mdiArrowRight" />
 
-                <ConvResultField class="inputs_container" />
+                <v-sheet
+                    border
+                    rounded="xl"
+                    color="surface"
+                    class="inputs_sheet"
+                >
+                    <ConvResultField 
+                        class="inputs_container" 
+                        :currency="curSymbols[rightTicker]"
+                    />
+                </v-sheet>
 
             </div>
 
@@ -111,7 +143,7 @@ onMounted(async () => {
 @reference '../assets/main.css';
  
 section {
-    @apply w-full h-[150px] bg-mauve-600; 
+    @apply w-full h-[max(150px,18vh)]; 
 }
 
 .converter_container {
@@ -125,7 +157,7 @@ section {
     @apply 
         w-full h-full flex flex-row 
         justify-between items-center
-        gap-2
+        
     ;
 }
 
@@ -133,20 +165,28 @@ section {
     @apply 
         w-full h-full 
         flex flex-row justify-between items-center
-        
+        gap-2
     ;
 }
 
 .app_title {
-    @apply text-center text-2xl font-bold text-shadow-sm text-shadow-green-800  
+    @apply 
+        text-center text-2xl font-light 
+        text-shadow-lg text-shadow-gray-500
+    ;
+}
+
+.inputs_sheet {
+    @apply 
+        w-full max-w-[45%] h-full px-4
     ;
 }
 
 .inputs_container {
     @apply 
-        w-full max-w-[45%] h-full
+        h-full py-2
         flex flex-col justify-between items-start
-        px-2 border rounded-lg 
+        
     ;
 }
 

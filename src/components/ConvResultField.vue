@@ -3,6 +3,8 @@ import { ref, computed } from 'vue';
 import { useConverterStore } from '@/stores/converter-store';
 import { storeToRefs } from 'pinia';
 
+const props = defineProps(['currency'])
+
 const { convResult } = storeToRefs(useConverterStore())
 const showSnackbar = ref(false)
 
@@ -43,6 +45,9 @@ const convResultFieldFontSize = computed(() => {
             @click="copyConvResult"
         >
             {{ convResult }}
+            <span class="opacity-50">
+                {{ currency }}
+            </span>
         </span>
 
         <v-snackbar 
@@ -50,6 +55,7 @@ const convResultFieldFontSize = computed(() => {
             color="primary"
             variant="tonal"
             timeout="1500"
+            rounded="xl"
         >
             Copied to Clipboard
         </v-snackbar>
@@ -62,7 +68,10 @@ const convResultFieldFontSize = computed(() => {
 @reference '../assets/main.css';
 
 .conv_input_field {
-    @apply w-32 cursor-pointer select-none;
+    @apply 
+        w-32 cursor-pointer select-none
+        inline-flex gap-2
+    ;
 }
 
 .conv_input_on_bg {

@@ -4,6 +4,8 @@ import { useConverterStore } from '@/stores/converter-store';
 import { storeToRefs } from 'pinia';
 import { computed, ref, watch } from 'vue';
 
+const props = defineProps(['currency'])
+
 const calcStore = useCalculatorStore()
 const { inputField, inputOnBg, activeOperator } = storeToRefs(calcStore)
 const showSnackbar = ref(false)
@@ -30,7 +32,11 @@ const copyResult = async (event) => {
 }
 
 watch(inputField, (newValue, oldValue) => {
-    currentQuantity.value = Number(newValue)
+    if (newValue == 'ERROR') {
+        currentQuantity.value = NaN
+    } else {
+        currentQuantity.value = Number(newValue)
+    }
 })
 
 </script>
@@ -51,6 +57,9 @@ watch(inputField, (newValue, oldValue) => {
             @click="copyResult"
         >
             {{ inputField }}
+            <span class="opacity-50">
+                {{ currency }}
+            </span>
         </span>
 
         <v-snackbar 
@@ -58,6 +67,7 @@ watch(inputField, (newValue, oldValue) => {
             color="primary"
             variant="tonal"
             timeout="1500"
+            rounded="xl"
         >
             Copied to Clipboard
         </v-snackbar>
@@ -74,7 +84,10 @@ watch(inputField, (newValue, oldValue) => {
 }
 
 .calc_input_field {
-    @apply m-0 w-[90%] cursor-pointer select-none;
+    @apply 
+        m-0 w-[90%] cursor-pointer select-none 
+        inline-flex gap-2
+    ;
 }
 
 </style>

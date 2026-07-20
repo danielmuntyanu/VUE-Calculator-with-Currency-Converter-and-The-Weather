@@ -9,7 +9,7 @@ const theme = useTheme()
 const isDark = computed(() => theme.global.current.value.dark)
 
 const themeIcon = computed(() =>
-  isDark.value ? mdiWeatherSunny : mdiWeatherNight
+  isDark.value ? mdiWeatherNight : mdiWeatherSunny
 )
 
 function toggleTheme() {
@@ -27,11 +27,29 @@ onMounted(() => {
 </script>
 
 <template>
-    <v-btn icon variant="text" @click="toggleTheme">
+    <v-btn 
+      icon 
+      variant="tonal" 
+      @click="toggleTheme"
+    >
         <v-scale-transition leave-absolute>
-            <v-icon :key="themeIcon">
+            <v-icon 
+              :key="themeIcon"
+            >
                 {{ themeIcon }}
             </v-icon>
         </v-scale-transition>
     </v-btn>
 </template>
+
+
+<style scoped>
+@reference '../assets/main.css';
+ 
+v-btn {
+  @apply 
+    bg-amber-950
+  ;
+}
+
+</style>

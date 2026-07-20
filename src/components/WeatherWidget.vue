@@ -134,7 +134,7 @@ onMounted(async () => {
 @reference '../assets/main.css';
 
 section {
-    @apply bg-red-500 w-full  h-full;
+    @apply bg-red-500 w-full h-full;
 }
 
 .weather_container {
