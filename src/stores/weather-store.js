@@ -30,6 +30,7 @@ export const useWeatherStore = defineStore('weather', () => {
 
   function storeProvince() {
     window.localStorage.setItem('currentProvince', JSON.stringify(currentProvince.value))
+    storeCity()
   }
 
   function checkStoredCity() {

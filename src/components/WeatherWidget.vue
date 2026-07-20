@@ -1,9 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import sleep from '@/services/sleep';
 import { useWeatherStore } from '@/stores/weather-store';
-import { mdiDotsHorizontal, mdiMenuDown } from '@mdi/js';
+import { mdiMenuDown } from '@mdi/js';
 
 const isLoadingProvince = ref(true)
 const isLoadingCity = ref(true)
@@ -54,6 +54,10 @@ onMounted(async () => {
     isLoadingWeather.value = false
 })
 
+const screenWidth = computed(() => {
+    return window.innerWidth <= 768
+})
+
 function truncate(str) {
     const maxLength = 19
     if (str.length <= maxLength) return str
@@ -88,9 +92,9 @@ function truncate(str) {
                                 variant="text"
                                 height="50px"
                                 width="175px"
-                                class="text-lg px-0 justify-start"
+                                class="text-lg md:!text-xl px-0 justify-start"
                             >
-                                {{truncate(currentProvince.getName().toUpperCase())}}
+                                {{screenWidth ? truncate(currentProvince.getName().toUpperCase()) : currentProvince.getName().toUpperCase()}}
                                 <v-icon 
                                     :icon="mdiMenuDown" 
                                     opacity=0.5
@@ -125,9 +129,9 @@ function truncate(str) {
                                 variant="text"
                                 height="50px"
                                 width="175px"
-                                class="text-lg px-0 justify-end md:justify-start"
+                                class="text-lg md:!text-xl px-0 justify-end md:!justify-start"
                             >
-                                {{ truncate(currentCity.getName().toUpperCase()) }}
+                                {{screenWidth ? truncate(currentCity.getName().toUpperCase()) : currentCity.getName().toUpperCase()}}
                                 <v-icon 
                                     :icon="mdiMenuDown" 
                                     opacity=0.5
@@ -149,10 +153,22 @@ function truncate(str) {
                 </div>
             </div>
             
+            <span class="temp_actual">
+                {{ currentWeather?.getTempActual() ?? '*' }}°
+            </span>
 
-            <h1>{{ currentWeather?.getTempActual() ?? '*' }}</h1>
-            <h1>{{ currentWeather?.getTempMin() ?? '*' }}</h1>
-            <h1>{{ currentWeather?.getTempMax() ?? '*' }}</h1>
+            <div class="temp_minmax_container">
+                <span class="temp_minmax">
+                    <span class="opacity-70">Min:</span> 
+                    {{ currentWeather?.getTempMin() ?? '*' }}°
+                </span>
+                <span class="temp_minmax">
+                    <span class="opacity-70">Max:</span>
+                    {{ currentWeather?.getTempMax() ?? '*' }}°
+                </span>
+            </div>
+
+            <div class="desktop_margin_element"></div>
         </v-sheet>
         
     </section>
@@ -169,6 +185,7 @@ section {
 .weather_container {
     @apply 
         h-full p-4
+        flex flex-col justify-between items-start
     ;
 }
 
@@ -177,6 +194,32 @@ section {
         flex 
         flex-row justify-between items-center
         md:flex-col md:justify-start md:gap-4 md:items-start
+    ;
+}
+
+.temp_actual {
+    @apply 
+        text-4xl
+    ;
+}
+
+.temp_minmax_container {
+    @apply 
+        flex md:flex-col gap-4
+
+    ;
+}
+
+
+.temp_minmax {
+    @apply 
+        text-2xl inline-flex gap-1
+    ;
+}
+
+.desktop_margin_element {
+    @apply 
+        hidden md:block h-[35%] w-20
     ;
 }
 

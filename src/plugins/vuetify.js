@@ -9,7 +9,7 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 const lightTheme = {
   dark: false,
   colors: {
-    primary: '#31708E',
+    primary: '#5085A5',
     secondary: '#687864',
     background: '#F7F9FB',
     surface: '#8FC1E3',
@@ -23,10 +23,13 @@ const darkTheme = {
     primary: '#31708E',
     secondary: '#687864',
     background: '#222629',
-    surface: '#8FC1E3',
+    surface: '#5085A5',
     error: '#F2B8B5',
   }
 }
+
+// #5085A5
+// #31708E
 
 export default createVuetify({
   components,
