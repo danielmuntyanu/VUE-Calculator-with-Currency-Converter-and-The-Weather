@@ -45,6 +45,7 @@ onMounted(async () => {
                         <v-btn
                             color="primary"
                             rounded="xl"
+                            elevation="3"
                             v-bind="props"
                         >
                             {{leftTicker}}
@@ -82,6 +83,7 @@ onMounted(async () => {
                         <v-btn
                             color="primary"
                             rounded="xl"
+                            elevation="3"
                             v-bind="props"
                         >
                             {{ rightTicker }}
@@ -108,6 +110,7 @@ onMounted(async () => {
                     border
                     rounded="xl"
                     color="surface"
+                    elevation="3"
                     class="inputs_sheet"
                 >
                     <CalcInputField 
@@ -122,6 +125,7 @@ onMounted(async () => {
                     border
                     rounded="xl"
                     color="surface"
+                    elevation="3"
                     class="inputs_sheet"
                 >
                     <ConvResultField 

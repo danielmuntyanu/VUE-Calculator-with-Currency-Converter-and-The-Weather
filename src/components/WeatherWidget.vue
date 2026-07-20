@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import sleep from '@/services/sleep';
 import { useWeatherStore } from '@/stores/weather-store';
 import { mdiMenuDown } from '@mdi/js';
+import { useTheme } from 'vuetify';
 
 const isLoadingProvince = ref(true)
 const isLoadingCity = ref(true)
@@ -26,6 +27,10 @@ const {
     chooseProvince 
 } = weatherStore
 
+const theme = useTheme()
+
+const isDark = computed(() => theme.global.current.value.dark)
+
 const chooseProvinceHandler = async (province) => {
     isLoadingCity.value = true
     isLoadingWeather.value = true
@@ -40,8 +45,36 @@ const chooseCityHandler = async (city) => {
     isLoadingWeather.value = false
 }
 
+const screenWidth = computed(() => {
+    return window.innerWidth <= 768
+})
+
+function truncate(str) {
+    const maxLength = 19
+    if (str.length <= maxLength) return str
+    const trimmed = str.slice(0, maxLength)
+    return trimmed + '...'
+}
+
+const images = import.meta.glob('@/assets/images/*.jpg', { eager: true, import: 'default' })
+
+const imageSrc = computed(() => {
+    return images[currentWeather.value?.getStateSkyImg()] ?? images['/src/assets/images/default.jpg']
+})
+
+const sheetStyles = computed(() => ({
+    backgroundImage: isDark.value
+        ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${imageSrc.value})`
+        : `url(${imageSrc.value})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+
+    borderColor: 'rgb(var(--v-theme-primary))',
+    borderWidth: '3'
+}))
 
 onMounted(async () => {
+    
     await initProvinces()
     isLoadingProvince.value = false
     await sleep(500)
@@ -54,27 +87,15 @@ onMounted(async () => {
     isLoadingWeather.value = false
 })
 
-const screenWidth = computed(() => {
-    return window.innerWidth <= 768
-})
-
-function truncate(str) {
-    const maxLength = 19
-    if (str.length <= maxLength) return str
-    const trimmed = str.slice(0, maxLength)
-    // return trimmed.slice(0, trimmed.lastIndexOf(' ')) + '...'
-    return trimmed + '...'
-}
-
 </script>
 
 <template>
     <section>
         <v-sheet 
             border
-            :style="{ borderColor: 'rgb(var(--v-theme-primary))' }"
             rounded="xl"
-            :image="currentWeather?.getStateSkyImg() ?? '@/assets/images/default.png'"
+            elevation="3"
+            :style="sheetStyles"
             class="weather_container"
         >
             <div class="location_container">
@@ -93,6 +114,7 @@ function truncate(str) {
                                 height="50px"
                                 width="175px"
                                 class="text-lg md:!text-xl px-0 justify-start"
+                                :class="isDark ? 'text-glow-dark' : 'text-glow-light'"
                             >
                                 {{screenWidth ? truncate(currentProvince.getName().toUpperCase()) : currentProvince.getName().toUpperCase()}}
                                 <v-icon 
@@ -130,6 +152,7 @@ function truncate(str) {
                                 height="50px"
                                 width="175px"
                                 class="text-lg md:!text-xl px-0 justify-end md:!justify-start"
+                                :class="isDark ? 'text-glow-dark' : 'text-glow-light'"
                             >
                                 {{screenWidth ? truncate(currentCity.getName().toUpperCase()) : currentCity.getName().toUpperCase()}}
                                 <v-icon 
@@ -153,16 +176,25 @@ function truncate(str) {
                 </div>
             </div>
             
-            <span class="temp_actual">
+            <span 
+                class="temp_actual"
+                :class="isDark ? 'text-glow-dark' : 'text-glow-light'"
+            >
                 {{ currentWeather?.getTempActual() ?? '*' }}°
             </span>
 
             <div class="temp_minmax_container">
-                <span class="temp_minmax">
+                <span 
+                    class="temp_minmax"
+                    :class="isDark ? 'text-glow-dark' : 'text-glow-light'"    
+                >
                     <span class="opacity-70">Min:</span> 
                     {{ currentWeather?.getTempMin() ?? '*' }}°
                 </span>
-                <span class="temp_minmax">
+                <span 
+                    class="temp_minmax"
+                    :class="isDark ? 'text-glow-dark' : 'text-glow-light'"
+                >
                     <span class="opacity-70">Max:</span>
                     {{ currentWeather?.getTempMax() ?? '*' }}°
                 </span>
@@ -184,7 +216,7 @@ section {
 
 .weather_container {
     @apply 
-        h-full p-4
+        h-full p-4 
         flex flex-col justify-between items-start
     ;
 }
@@ -199,7 +231,7 @@ section {
 
 .temp_actual {
     @apply 
-        text-4xl
+        text-4xl font-black
     ;
 }
 
@@ -213,7 +245,7 @@ section {
 
 .temp_minmax {
     @apply 
-        text-2xl inline-flex gap-1
+        text-2xl font-bold inline-flex gap-1
     ;
 }
 
@@ -221,6 +253,14 @@ section {
     @apply 
         hidden md:block h-[35%] w-20
     ;
+}
+
+.text-glow-light {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+}
+
+.text-glow-dark {
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
 }
 
 </style>

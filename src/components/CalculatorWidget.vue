@@ -96,6 +96,7 @@ onUnmounted(() => {
                 rounded="xl"
                 @click="btnHandler(clearButton)"
                 color="primary"
+                elevation="3"
                 class="calc_button"
                 
             >
@@ -109,6 +110,7 @@ onUnmounted(() => {
                 :id="`btn_${item}`"
                 variant="elevated"
                 rounded="xl"
+                elevation="3"
                 @click="btnHandler(item)"
                 class="calc_button"
                 

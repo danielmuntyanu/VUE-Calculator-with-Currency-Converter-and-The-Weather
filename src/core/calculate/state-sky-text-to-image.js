@@ -1,6 +1,6 @@
     export function getStateSkyImage(description) {
         if (typeof description != 'string' || !description.trim()) {
-            return "default.png"
+            return "default.jpg"
         }
         
         description = description.toLowerCase()
@@ -39,16 +39,16 @@
 
         // Choosing image logic
 
-        if (isStormy) return 'storm.png'
+        if (isStormy) return 'storm.jpg'
 
-        if (isSnowy) return 'snow.png'
+        if (isSnowy) return 'snow.jpg'
 
-        if (isRaining) return 'raining.png'
+        if (isRaining) return 'rain.jpg'
 
-        if (isCloudy) return 'cloudy.png'
+        if (isCloudy) return 'cloudy.jpg'
 
-        if (isClearSky) return 'clear-sky.png'
+        if (isClearSky) return 'sun.jpg'
 
-        return 'default.png'
+        return 'default.jpg'
 
     }
