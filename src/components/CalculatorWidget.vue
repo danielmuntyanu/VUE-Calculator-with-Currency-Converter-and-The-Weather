@@ -132,7 +132,12 @@ onUnmounted(() => {
 @reference '../assets/main.css';
  
 section {
-    @apply w-full h-[50vh] pb-10 py-4 ;
+    @apply 
+        w-full 
+        h-[50vh] md:h-full
+        pb-10 md:pb-0 
+        py-4
+    ;
 }
 
 .buttons_grid {
@@ -144,7 +149,7 @@ section {
 }
 
 .calc_button {
-    @apply h-10;
+    @apply h-10 md:h-13;
 }
 
 </style>

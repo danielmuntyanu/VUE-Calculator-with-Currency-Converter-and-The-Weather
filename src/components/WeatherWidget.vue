@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import sleep from '@/services/sleep';
 import { useWeatherStore } from '@/stores/weather-store';
+import { mdiDotsHorizontal, mdiMenuDown } from '@mdi/js';
 
 const isLoadingProvince = ref(true)
 const isLoadingCity = ref(true)
@@ -53,78 +54,106 @@ onMounted(async () => {
     isLoadingWeather.value = false
 })
 
+function truncate(str) {
+    const maxLength = 19
+    if (str.length <= maxLength) return str
+    const trimmed = str.slice(0, maxLength)
+    // return trimmed.slice(0, trimmed.lastIndexOf(' ')) + '...'
+    return trimmed + '...'
+}
 
 </script>
 
 <template>
     <section>
-        <div class="weather_container">
-            <div class="province_choose">
-                <v-progress-circular
-                    v-if="isLoadingProvince"
-                    indeterminate 
-                    :width="7"
-                ></v-progress-circular>
+        <v-sheet 
+            border
+            :style="{ borderColor: 'rgb(var(--v-theme-primary))' }"
+            rounded="xl"
+            :image="currentWeather?.getStateSkyImg() ?? '@/assets/images/default.png'"
+            class="weather_container"
+        >
+            <div class="location_container">
+                <div class="province_choose">
+                    <v-progress-circular
+                        v-if="isLoadingProvince"
+                        indeterminate 
+                        :width="7"
+                    ></v-progress-circular>
 
-                <v-menu v-else open-on-hover>
-                    <template v-slot:activator="{ props }">
-                        <v-btn
-                            color="primary"
-                            v-bind="props"
-                        >
-                            {{currentProvince.getName()}}
-                        </v-btn>
-                    </template>
+                    <v-menu v-else>
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                v-bind="props"
+                                variant="text"
+                                height="50px"
+                                width="175px"
+                                class="text-lg px-0 justify-start"
+                            >
+                                {{truncate(currentProvince.getName().toUpperCase())}}
+                                <v-icon 
+                                    :icon="mdiMenuDown" 
+                                    opacity=0.5
+                                />
+                            </v-btn>
+                        </template>
 
-                    <v-list>
-                        <v-list-item
-                            v-for="(item, index) in provList"
-                            :key="index"
-                            :value="index"
-                            @click="chooseProvinceHandler(item)"
-                        >
-                            <v-list-item-title>{{ item.getName() }}</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
+                        <v-list>
+                            <v-list-item
+                                v-for="(item, index) in provList"
+                                :key="index"
+                                :value="index"
+                                @click="chooseProvinceHandler(item)"
+                            >
+                                <v-list-item-title>{{ item.getName() }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
+
+                <div class="city_choose">
+                    <v-progress-circular 
+                        v-if="isLoadingCity"
+                        indeterminate 
+                        :width="7"
+                    ></v-progress-circular>
+
+                    <v-menu v-else>
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                v-bind="props"
+                                variant="text"
+                                height="50px"
+                                width="175px"
+                                class="text-lg px-0 justify-end md:justify-start"
+                            >
+                                {{ truncate(currentCity.getName().toUpperCase()) }}
+                                <v-icon 
+                                    :icon="mdiMenuDown" 
+                                    opacity=0.5
+                                />
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item
+                                v-for="(item, index) in cityList"
+                                :key="index"
+                                :value="index"
+                                @click="chooseCityHandler(item)"
+                            >
+                                <v-list-item-title>{{ item.getName() }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
             </div>
-
-            <div class="city_choose">
-                <v-progress-circular 
-                    v-if="isLoadingCity"
-                    indeterminate 
-                    :width="7"
-                ></v-progress-circular>
-
-                <v-menu v-else open-on-hover>
-                    <template v-slot:activator="{ props }">
-                        <v-btn
-                            color="primary"
-                            v-bind="props"
-                        >
-                            {{ currentCity.getName() }}
-                        </v-btn>
-                    </template>
-
-                    <v-list>
-                        <v-list-item
-                            v-for="(item, index) in cityList"
-                            :key="index"
-                            :value="index"
-                            @click="chooseCityHandler(item)"
-                        >
-                            <v-list-item-title>{{ item.getName() }}</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
-            </div>
-
-            <img :src="currentWeather?.getStateSkyImg() ?? '@/assets/images/default.png'" />
+            
 
             <h1>{{ currentWeather?.getTempActual() ?? '*' }}</h1>
             <h1>{{ currentWeather?.getTempMin() ?? '*' }}</h1>
             <h1>{{ currentWeather?.getTempMax() ?? '*' }}</h1>
-        </div>
+        </v-sheet>
         
     </section>
    
@@ -134,12 +163,20 @@ onMounted(async () => {
 @reference '../assets/main.css';
 
 section {
-    @apply bg-red-500 w-full h-full;
+    @apply w-full h-full pt-4;
 }
 
 .weather_container {
     @apply 
-        bg-amber-800 h-full
+        h-full p-4
+    ;
+}
+
+.location_container {
+    @apply 
+        flex 
+        flex-row justify-between items-center
+        md:flex-col md:justify-start md:gap-4 md:items-start
     ;
 }
 

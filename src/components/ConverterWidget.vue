@@ -143,7 +143,11 @@ onMounted(async () => {
 @reference '../assets/main.css';
  
 section {
-    @apply w-full h-[max(150px,18vh)]; 
+    @apply 
+        w-full 
+        h-[max(150px,18vh)]
+        md:h-[max(250px,20vh)]
+    ; 
 }
 
 .converter_container {
@@ -171,8 +175,8 @@ section {
 
 .app_title {
     @apply 
-        text-center text-2xl font-light 
-        text-shadow-lg text-shadow-gray-500
+        text-center text-2xl font-semibold
+        text-shadow-sm text-shadow-blue-300
     ;
 }
 
