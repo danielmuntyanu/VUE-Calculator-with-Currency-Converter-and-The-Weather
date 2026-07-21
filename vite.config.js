@@ -8,6 +8,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/VUE-Calculator-with-Currency-Converter-and-The-Weather/',
   plugins: [
     vue(),
     vueJsx(),

@@ -25,7 +25,7 @@ const isDark = computed(() => theme.global.current.value.dark)
 const images = import.meta.glob('@/assets/images/*.jpg', { eager: true, import: 'default' })
 
 const imageSrc = computed(() => {
-    return images[currentWeather.value?.getStateSkyImg()] ?? images['/src/assets/images/default.jpg']
+    return images[currentWeather.value?.getStateSkyImg()] ?? images[`${import.meta.env.BASE_URL}/src/assets/images/default.jpg`]
 })
 
 const sheetStyles = computed(() => ({
