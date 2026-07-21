@@ -9,6 +9,7 @@ export const useCalculatorStore = defineStore('calculator', () => {
   const inputOnBg = ref(null)
   const equalPressed = ref(false)
   const dotEntered = ref(false)
+  const justPressedOrepator = ref(false)
 
   // Getters
   const hasInput = computed(() => {
@@ -44,13 +45,18 @@ export const useCalculatorStore = defineStore('calculator', () => {
     activeOperator.value = null
     equalPressed.value = false
     dotEntered.value = false
+    justPressedOrepator.value = false
   }
 
   function clearCurrent() {
+    justPressedOrepator.value = false
+
     inputField.value = "0"
   }
 
   function addDigit(digit) {
+    justPressedOrepator.value = false
+
     if (inputField.value == 'ERROR') {
       return
     }
@@ -92,26 +98,41 @@ export const useCalculatorStore = defineStore('calculator', () => {
       return
     }
     
+    if (!activeOperator.value) {
+      // pressing operator for first time
+      activeOperator.value = oper
+      inputOnBg.value = inputField.value
+      inputField.value = "0"
+    } else {
+      if (justPressedOrepator.value) {
+        // change choice of operator in the moment
+        activeOperator.value = oper
+      } else {
+        // next operation on pressing operator after digits or equal
+        if (!equalPressed.value) {
+          calculate()
+        }
+        activeOperator.value = oper
+        inputOnBg.value = inputField.value
+        inputField.value = "0"
+      }
+    }
+
     if (equalPressed.value) {
       equalPressed.value = false
     }
 
-    if (!activeOperator.value) {
-    activeOperator.value = oper
-    inputOnBg.value = inputField.value
-    
-    inputField.value = "0"
-    } else {
-      activeOperator.value = oper
-    }
+    justPressedOrepator.value = true
     
   }
 
   function calculate() {
+    justPressedOrepator.value = false
+    
     if (inputField.value == 'ERROR') {
       return
     }
-
+    
     if (inputOnBg.value == null) return
     
     let result;

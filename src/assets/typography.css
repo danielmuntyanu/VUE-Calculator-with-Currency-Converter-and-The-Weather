@@ -1,0 +1,7 @@
+.text-glow-light {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+}
+
+.text-glow-dark {
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+}

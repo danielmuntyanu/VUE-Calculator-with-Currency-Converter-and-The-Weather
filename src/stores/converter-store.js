@@ -13,6 +13,14 @@ export const useConverterStore = defineStore('conterter', () => {
     const curs = ref([])
     const currentQuantity = ref(0)
     
+    const curSymbols = {
+        "USD": "$",
+        "EUR": "€",
+        "JPY": "¥",
+        "UAH": "₴",
+        "TRY": "₺",
+    }
+
     const tickersList = computed(() => {
         return curs.value.map((item) => {
             return item.getTicker()
@@ -51,6 +59,7 @@ export const useConverterStore = defineStore('conterter', () => {
         leftTicker, 
         rightTicker,
         tickersList,
-        initCurs
+        initCurs,
+        curSymbols
     }
 })

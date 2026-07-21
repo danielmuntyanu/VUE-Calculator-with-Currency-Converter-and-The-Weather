@@ -1,6 +1,6 @@
 # Factoria F5 - Exercise: VUE Calculator with Currency Converter and The Weather
 
-Go to [APP](https://)
+Go to -> [ConvCulator+](https://danielmuntyanu.github.io/VUE-Calculator-with-Currency-Converter-and-The-Weather/)
 
 ## Description:
 > A basic Vue app with calculator, currency converter and weather widget. 
@@ -26,8 +26,8 @@ Go to [APP](https://)
 ## Tests
 
 ### Unit Tests (Vitest)
-![](docs/tests/unit-tests-screenshot.png)
-![](docs/tests/unit-coverage-screenshot.png)
+![Vitest](docs/screenshots/vitest.png)
+![Coverage](docs/screenshots/coverage.png)
 
 ### e2e Tests (Playwright)
-![](docs/tests/e2e-tests-screenshot.png)
+![e2e](docs/screenshots/playwright.png)

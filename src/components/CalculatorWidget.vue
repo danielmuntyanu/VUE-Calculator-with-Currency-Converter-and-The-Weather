@@ -14,6 +14,8 @@ const { storeMemory, resetMemory } = memoryStore
 
 function memoryRead() {
     if (getMemory.value != null) {
+        console.log(getMemory.value);
+        
         inputField.value = getMemory.value
     }
 }

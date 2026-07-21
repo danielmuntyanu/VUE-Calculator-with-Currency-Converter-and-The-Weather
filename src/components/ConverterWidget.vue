@@ -13,14 +13,6 @@ const convStore = useConverterStore()
 const { tickersList, leftTicker, rightTicker } = storeToRefs(convStore)
 const { initCurs } = convStore
 
-const curSymbols = {
-    "USD": "$",
-    "EUR": "€",
-    "JPY": "¥",
-    "UAH": "₴",
-    "TRY": "₺",
-}
-
 onMounted(async () => {
     await initCurs()
     isLoading.value = false
@@ -47,6 +39,7 @@ onMounted(async () => {
                             rounded="xl"
                             elevation="3"
                             v-bind="props"
+                            id="leftTicker"
                         >
                             {{leftTicker}}
                             <v-icon :icon="mdiMenuDown" />
@@ -58,6 +51,7 @@ onMounted(async () => {
                         v-for="(item, index) in tickersList"
                         :key="index"
                         :value="index"
+                        :id="`leftTicker_${item}`"
                         @click="leftTicker = item"
                         >
                         <v-list-item-title>{{ item }}</v-list-item-title>
@@ -85,6 +79,7 @@ onMounted(async () => {
                             rounded="xl"
                             elevation="3"
                             v-bind="props"
+                            id="rightTicker"
                         >
                             {{ rightTicker }}
                             <v-icon :icon="mdiMenuDown" />
@@ -96,6 +91,7 @@ onMounted(async () => {
                         v-for="(item, index) in tickersList"
                         :key="index"
                         :value="index"
+                        :id="`rightTicker_${item}`"
                         @click="rightTicker = item"
                         >
                         <v-list-item-title>{{ item }}</v-list-item-title>
@@ -115,7 +111,7 @@ onMounted(async () => {
                 >
                     <CalcInputField 
                         class="inputs_container" 
-                        :currency="curSymbols[leftTicker]"
+                        :currency="convStore.curSymbols[leftTicker]"
                     />
                 </v-sheet>
 
@@ -130,7 +126,7 @@ onMounted(async () => {
                 >
                     <ConvResultField 
                         class="inputs_container" 
-                        :currency="curSymbols[rightTicker]"
+                        :currency="convStore.curSymbols[rightTicker]"
                     />
                 </v-sheet>
 
