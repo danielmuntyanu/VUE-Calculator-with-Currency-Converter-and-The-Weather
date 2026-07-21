@@ -4,7 +4,20 @@ Go to -> [ConvCulator+](https://danielmuntyanu.github.io/VUE-Calculator-with-Cur
 
 ## Description:
 > A basic Vue app with calculator, currency converter and weather widget. 
+
 > It was made for exercise at Factoria F5 Java Fullstack Bootcamp. 
+
+## Screenshots: 
+
+### Light Theme
+![light theme mobile](docs/screenshots/light.png)
+
+### Dark Theme
+![dark theme mobile](docs/screenshots/dark.png)
+
+### Desktop View
+![dark theme desktop](docs/screenshots/desktop.png)
+
 
 ## Stack:
 - Vuejs
